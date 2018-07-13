@@ -1,15 +1,18 @@
 <template>
-    <div>
-        <p>{{ quoteText }}</p>
+    <div @click="removeQuote">
+        <p>{{ quote.text }}</p>
     </div>
 </template>
 
 <script>
+    import { quotesBus } from '../main.js';
+
     export default {
         name: "Quote",
-        data() {
-            return {
-                quoteText: 'Test text'
+        props: ['quote'],
+        methods: {
+            removeQuote() {
+                quotesBus.$emit('quoteWasRemoved', this.quote);
             }
         }
     }

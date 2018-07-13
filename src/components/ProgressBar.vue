@@ -1,14 +1,22 @@
 <template>
         <div class="empty">
-            <div class="progress">
-                <p>1/10</p>
+            <div class="progress" :style="{width: progress}">
+                <p>{{ quotesNumber }}/10</p>
             </div>
         </div>
 </template>
 
 <script>
     export default {
-        name: "ProgressBar"
+        name: "ProgressBar",
+        props: {
+            quotesNumber: Number
+        },
+        computed: {
+            progress() {
+                return (this.quotesNumber * 10) + '%';
+            }
+        }
     }
 </script>
 
@@ -20,7 +28,7 @@
 
     .progress {
         background-color: #46b8da;
-        width: 10%;
+        width: 0;
     }
 
     p {

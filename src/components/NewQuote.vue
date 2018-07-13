@@ -1,15 +1,38 @@
 <template>
     <div>
         <h3>Quote</h3>
-        <textarea name="newQuote" id="newQuote" cols="100" rows="3"></textarea>
-        <button>Add Quote</button>
+        <textarea name="newQuote" id="newQuote" cols="100" rows="3" v-model="qoute.text"></textarea>
+        <button @click="addQuote">Add Quote</button>
     </div>
 
 </template>
 
 <script>
+    import { quotesBus } from '../main.js';
+
     export default {
-        name: "NewQuote"
+        name: "NewQuote",
+        props: {
+            quotesNumber: Number
+        },
+        computed: {
+            newQuoteId() {
+                return this.quotesNumber + 1;
+            },
+            qoute() {
+                return {
+                    id: this.newQuoteId,
+                    text: ''
+                }
+            }
+        },
+        methods: {
+            addQuote() {
+                if(this.quotesNumber < 10) {
+                    quotesBus.$emit('quoteWasAdded', this.qoute);
+                }
+            }
+        }
     }
 </script>
 

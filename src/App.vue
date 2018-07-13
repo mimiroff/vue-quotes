@@ -1,15 +1,10 @@
 <template>
     <div class="container">
         <appHeader></appHeader>
-        <appProgressBar></appProgressBar>
-        <appNewQuote></appNewQuote>
+        <appProgressBar :quotesNumber="quotes.length"></appProgressBar>
+        <appNewQuote :quotesNumber="quotes.length"></appNewQuote>
         <div class="quote-container">
-            <appQuote></appQuote>
-            <appQuote></appQuote>
-            <appQuote></appQuote>
-            <appQuote></appQuote>
-            <appQuote></appQuote>
-            <appQuote></appQuote>
+            <appQuote v-for="quote in quotes" :key="quote.id" :quote="quote"></appQuote>
         </div>
         <app-footer></app-footer>
     </div>
@@ -20,7 +15,8 @@
     import Footer from './components/Footer.vue';
     import NewQuote from './components/NewQuote.vue';
     import Quote from './components/Quote.vue';
-    import ProgressBar from './components/ProgressBar.vue'
+    import ProgressBar from './components/ProgressBar.vue';
+    import { quotesBus } from './main.js';
 
     export default {
         components: {
@@ -29,6 +25,24 @@
             appNewQuote: NewQuote,
             appQuote: Quote,
             appProgressBar: ProgressBar
+        },
+        data() {
+            return {
+                quotes: []
+            }
+        },
+        created() {
+            quotesBus.$on('quoteWasAdded', (quote) => {
+                this.quotes.push(quote);
+            }),
+            quotesBus.$on('quoteWasRemoved', (quote) => {
+                this.quotes = this.quotes.filter((el) => {
+                    if (el.id !== quote.id) {
+                        return el;
+                    }
+                });
+            })
+
         }
     }
 </script>
