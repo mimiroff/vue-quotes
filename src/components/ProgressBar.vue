@@ -1,7 +1,7 @@
 <template>
         <div class="empty">
             <div class="progress" :style="{width: progress}">
-                <p>{{ quotesNumber }}/10</p>
+                <p>{{ quotesNumber }}/ {{ quotesMax }}</p>
             </div>
         </div>
 </template>
@@ -10,11 +10,12 @@
     export default {
         name: "ProgressBar",
         props: {
-            quotesNumber: Number
+            quotesNumber: Number,
+            quotesMax: Number
         },
         computed: {
             progress() {
-                return (this.quotesNumber * 10) + '%';
+                return ((this.quotesNumber / this.quotesMax) * 100) + '%';
             }
         }
     }

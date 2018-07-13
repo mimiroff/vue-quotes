@@ -8,12 +8,11 @@
 </template>
 
 <script>
-    import { quotesBus } from '../main.js';
-
     export default {
         name: "NewQuote",
         props: {
-            quotesNumber: Number
+            quotesNumber: Number,
+            quotesMax: Number
         },
         computed: {
             newQuoteId() {
@@ -28,8 +27,8 @@
         },
         methods: {
             addQuote() {
-                if(this.quotesNumber < 10) {
-                    quotesBus.$emit('quoteWasAdded', this.qoute);
+                if(this.quotesNumber < this.quotesMax) {
+                    this.$emit('quoteWasAdded', this.qoute);
                 }
             }
         }

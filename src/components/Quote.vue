@@ -5,14 +5,12 @@
 </template>
 
 <script>
-    import { quotesBus } from '../main.js';
-
     export default {
         name: "Quote",
         props: ['quote'],
         methods: {
             removeQuote() {
-                quotesBus.$emit('quoteWasRemoved', this.quote);
+                this.$emit('quoteWasRemoved', this.quote);
             }
         }
     }
